@@ -20,6 +20,7 @@ const Login = () => {
 	const email = useRef();
 	const password = useRef();
 	const name = useRef();
+	const confPassword = useRef();
 
 	const handleButtonClick = () => {
 		const message = checkValidData(
@@ -29,8 +30,15 @@ const Login = () => {
 		setErrorMessage(message);
 
 		if (message) return;
-
+		
 		if (!isSignInForm) {
+			if (password.current.value !== confPassword.current.value) {
+				setErrorMessage(
+					"Enter correct password in 'Confirm Password' field"
+				);
+				return;
+			}
+			
 			createUserWithEmailAndPassword(
 				auth,
 				email.current.value,
@@ -45,7 +53,8 @@ const Login = () => {
 							"https://avatars.githubusercontent.com/u/141582030?v=4",
 					})
 						.then(() => {
-							const {uid, email, displayName, photoURL} = auth.currentUser;
+							const { uid, email, displayName, photoURL } =
+								auth.currentUser;
 							dispatch(
 								addUser({
 									uid: uid,
@@ -89,6 +98,9 @@ const Login = () => {
 
 	const toggleSignInForm = () => {
 		setIsSignInForm(!isSignInForm);
+		setErrorMessage("");
+		email.current.value = "";
+		password.current.value = "";
 	};
 
 	return (
@@ -106,7 +118,7 @@ const Login = () => {
 				onClick={(e) => {
 					e.preventDefault();
 				}}
-				className="w-full md:w-3/12 absolute p-12 bg-black my-36 mx-auto left-0 right-0 text-white rounded-lg bg-opacity-80"
+				className="w-full md:w-3/12 absolute p-12 bg-black my-36 mx-auto left-0 right-0 text-white rounded-lg bg-opacity-80 z-20"
 			>
 				<h1 className="font-bold text-3xl py-4">
 					{isSignInForm ? "Sign In" : "Sign Up"}
@@ -131,6 +143,14 @@ const Login = () => {
 					placeholder="Password"
 					className="p-4 my-4 w-full bg-gray-700 rounded-lg"
 				/>
+				{!isSignInForm && (
+					<input
+						ref={confPassword}
+						type="password"
+						placeholder="Confirm Password"
+						className="p-4 my-4 w-full bg-gray-700 rounded-lg"
+					/>
+				)}
 				<p className="text-red-500 font-bold text-lg py-2">
 					{errorMessage}
 				</p>
@@ -146,6 +166,7 @@ const Login = () => {
 						: "Already Registered Sign In Now..."}
 				</p>
 			</form>
+			<div className="h-full bg-black opacity-[0.5] w-full absolute top-0 z-10"></div>
 		</div>
 	);
 };
