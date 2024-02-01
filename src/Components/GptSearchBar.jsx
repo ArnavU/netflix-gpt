@@ -26,21 +26,21 @@ const GptSearchBar = () => {
 
 		const gptQuery = `Act as a Movie Recommendation System and sugest some movies for the query: ${searchText.current.value}. Only give me names of 5 movies, comma seperated like the example result give ahead. Example Result: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya`;
 
-		// const gptResults = await openai.chat.completions.create({
-		// 	messages: [{ role: "user", content: gptQuery }],
-		// 	model: "gpt-3.5-turbo",
-		// });
+		const gptResults = await openai.chat.completions.create({
+			messages: [{ role: "user", content: gptQuery }],
+			model: "gpt-3.5-turbo",
+		});
 
-		const gptResults = {
-			choices: [
-				{
-					message: {
-						content:
-							"Andaz Apna Apna, Chupke Chupke, Jaane Bhi Do Yaaro, Amar Akbar Anthony, Hera Pheri",
-					},
-				},
-			],
-		};
+		// const gptResults = {
+		// 	choices: [
+		// 		{
+		// 			message: {
+		// 				content:
+		// 					"Andaz Apna Apna, Chupke Chupke, Jaane Bhi Do Yaaro, Amar Akbar Anthony, Hera Pheri",
+		// 			},
+		// 		},
+		// 	],
+		// };
 
 		if (!gptResults.choices) {
 			// TODO: Write Error handling
@@ -61,19 +61,19 @@ const GptSearchBar = () => {
 	};
 
 	return (
-		<div className="pt-[10%] flex justify-center">
+		<div className="md:pt-[15vh] pt-[20%] flex justify-center">
 			<form
 				onSubmit={(e) => e.preventDefault()}
-				className="bg-black w-1/2 grid grid-cols-12"
+				className="bg-black w-full md:w-1/2 grid grid-cols-12"
 			>
 				<input
 					ref={searchText}
 					type="text"
-					className="p-4 m-4 col-span-9 rounded-md"
+					className="p-4 m-4 col-span-8 rounded-md text-[10px] md:text-[24px]"
 					placeholder={LANG[langKey]?.gptSearchPlaceHolder}
 				/>
 				<button
-					className="py-2 px-4 m-4 col-span-3 bg-red-700 text-white rounded-lg"
+					className="py-2 px-4 m-4 text-[10px] md:text-[24px] col-span-4 bg-red-700 text-white rounded-lg"
 					onClick={handleGptSearchClick}
 				>
 					{LANG[langKey]?.search}

@@ -56,13 +56,17 @@ const Header = () => {
 
 	return (
 		// netflix logo
-		<div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-40 flex justify-between">
-			<img className="w-44" src={LOGO_URL} alt="logo" />
+		<div className="absolute w-screen px-8 md:py-0 bg-gradient-to-b from-black z-40 flex md:justify-between align-middle flex-col md:flex-row">
+			<img
+				className="w-32	sm:w-44 md:w-44 mx-auto md:mx-0"
+				src={LOGO_URL}
+				alt="logo"
+			/>
 
 			{user && (
 				// user image and signout button
-				<div className="flex p-2">
-					{showGptSearch &&
+				<div className="flex md:p-2 justify-center items-center">
+					{showGptSearch && (
 						<select
 							className="p-2 bg-gray-900 text-white rounded-lg"
 							onChange={handleLanguageChange}
@@ -78,15 +82,15 @@ const Header = () => {
 								);
 							})}
 						</select>
-					}
+					)}
 					<button
-						className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg"
+						className="p-1 md:py-2 md:px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg shrink-0"
 						onClick={handleGptSearchClick}
 					>
 						{showGptSearch ? "Home Page" : "GPT Search"}
 					</button>
 					<img
-						className="w-12 h-12"
+						className="w-12 h-12 hidden sm:block md:block"
 						alt="usericon"
 						src={user.photoURL}
 					/>

@@ -100,23 +100,24 @@ const Login = () => {
 	};
 
 	return (
-		<div>
+		<div className="h-screen">
 			<Header />
-			<div>
+			<div className="relative">
 				<img
-					className="absolute"
+					className="fixed h-full w-full object-cover"
 					src={BG_URL}
 					alt="background"
 				/>
+				<div className="fixed h-full w-full bg-black/70"></div>
 			</div>
 
 			<form
 				onClick={(e) => {
 					e.preventDefault();
 				}}
-				className="w-full md:w-3/12 absolute p-12 bg-black my-36 mx-auto left-0 right-0 text-white rounded-lg bg-opacity-80 z-20"
+				className="w-full md:w-3/12 absolute p-10 pb-2 pt-[20px] bg-black my-20 md:my-36 mx-auto left-0 right-0 text-white rounded-lg bg-opacity-80 z-20"
 			>
-				<h1 className="font-bold text-3xl py-4">
+				<h1 className="font-bold text-3xl">
 					{isSignInForm ? "Sign In" : "Sign Up"}
 				</h1>
 				{!isSignInForm && (
@@ -162,7 +163,6 @@ const Login = () => {
 						: "Already Registered Sign In Now..."}
 				</p>
 			</form>
-			<div className="h-full bg-black opacity-[0.5] w-full absolute top-0 z-10"></div>
 		</div>
 	);
 };
