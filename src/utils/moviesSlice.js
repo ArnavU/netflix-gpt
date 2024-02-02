@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { create } from "lodash";
 
 const moviesSlice = createSlice({
     name: "movies", 
@@ -8,6 +9,7 @@ const moviesSlice = createSlice({
         topRatedMovies: null,
         upcomingMovies: null,
         trailerVideo: null,
+        cardHoverVideos: {},
     },
     reducers: {
         addNowPlayingMovies: (state, action) =>{
@@ -24,10 +26,15 @@ const moviesSlice = createSlice({
         }, 
         addTrailerVideo: (state, action) => {
             state.trailerVideo = action.payload;
+        },
+        addCardHoverVideos: (state, action) => {
+            const {movieId, trailerKey} = action.payload;
+            console.log("HIIII", movieId, trailerKey);
+            state.cardHoverVideos[movieId] = trailerKey;
         }
     }
 })
 
-export const {addNowPlayingMovies, addTrailerVideo, addPopularMovies, addTopRatedMovies, addUpcomingMovies} = moviesSlice.actions;
+export const {addNowPlayingMovies, addTrailerVideo, addPopularMovies, addTopRatedMovies, addUpcomingMovies, addCardHoverVideos} = moviesSlice.actions;
 
 export default moviesSlice.reducer;
