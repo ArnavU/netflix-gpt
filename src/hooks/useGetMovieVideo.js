@@ -2,11 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCardHoverVideos } from "../utils/moviesSlice";
 import { API_OPTIONS } from "../utils/constants";
 import { useEffect } from "react";
+import { add_id_vs_yt_key } from "../utils/clickedCardVideoKeySlice";
 
 // fetch the video
 const useGetMovieVideo = async (movieId) => {
     const dispatch = useDispatch();
-	const ids = useSelector((store) => store.movies.cardHoverVideos);
+	const ids = useSelector((store) => store.clickedCardVideoKey.id_vs_yt_key);
 
 	const getMoviesData = async () => {
 		const data = await fetch(
@@ -23,7 +24,7 @@ const useGetMovieVideo = async (movieId) => {
 		const trailerKey = trailer?.key;
 
 		dispatch(
-			addCardHoverVideos({ movieId: movieId, trailerKey: trailerKey })
+			add_id_vs_yt_key({ movieId: movieId, trailerKey: trailerKey })
 		);
 
 	};

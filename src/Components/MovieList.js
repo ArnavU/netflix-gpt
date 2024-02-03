@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
+import { useSelector } from "react-redux";
 
-function MovieList({ title, movies }) {
+function MovieList({ listTitle, movies }) {
 	const [hoveredId, setHoveredId] = useState(null);
 	const [clickedId, setClickedId] = useState(null);
-	const [clickedCardDescription, setClickedCardDescription] = useState(null);
 
-	if(clickedId) {
-console.log("card clicked");
-	}
+	// const clickedEle = useSelector(store => store.movies.clickedEle);
 
-	useEffect(()=> {
+	console.log("card clicked");
+
+	useEffect(() => {
 		console.log("uesEffect of MovieList");
-	}, [])
-	
+	}, []);
+
 	return (
-		<div className="p-6 md:pl-[40px]">
+		<div className="p-6 md:pl-[40px] relative">
 			<h1 className="text-lg md:text-3xl font-bold py-4 text-white">
-				{title}
+				{listTitle}
 			</h1>
 			<div className="flex flex-shrink-0 gap-2 overflow-x-auto overflow-y-hidden">
 				{movies?.map((movie) => {
@@ -38,8 +38,15 @@ console.log("card clicked");
 							posterPath={movie.poster_path}
 							setClickedId={setClickedId}
 							clickedId={clickedId}
-							description={[id, title, original_language, overview, release_date, vote_average]}
-							setClickedCardDescription={setClickedCardDescription}
+							description={[
+								id,
+								title,
+								original_language,
+								overview,
+								release_date,
+								vote_average,
+							]}
+							listTitle={listTitle}
 						/>
 					);
 				})}

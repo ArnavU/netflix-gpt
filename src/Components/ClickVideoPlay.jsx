@@ -7,7 +7,7 @@ function ClickVideoPlay({ movieId }) {
 
 	useGetMovieVideo(movieId);
 
-	const ids = useSelector((store) => store.movies.cardHoverVideos);
+	const ids = useSelector((store) => store.clickedCardVideoKey.id_vs_yt_key);
 
 	return (
 		<div className="h-full w-full">

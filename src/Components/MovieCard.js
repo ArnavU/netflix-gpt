@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
 import { IMG_CDN_URL } from "../utils/constants";
 import HoverVideoPlay from "./HoverVideoPlay";
 import { useDispatch, useSelector } from "react-redux";
-import { addMovieDescription, addNowClickedCard } from "../utils/moviesSlice";
-import useDispatchDescription from "../hooks/useDispatchDescription";
-import ClickVideoPlay from "./ClickVideoPlay";
+import { addClickedEle } from "../utils/moviesSlice";
 import DescriptionCard from "./DescriptionCard";
+import { addClickedEle2 } from "../utils/clickedEleSlice";
 
 function MovieCard({
 	posterPath,
@@ -15,14 +13,16 @@ function MovieCard({
 	setClickedId,
 	clickedId,
 	description,
-	setClickedCardDescription,
+	listTitle,
 }) {
-	const movieDescription = useDispatchDescription(description, movieId);
-	
+	const clickedEle = useSelector(store => store.clickedEle.clickedEle);
+
 	const dispatch = useDispatch();
-
+	let style = listTitle+movieId;
+	let classStyle = listTitle+movieId;	
+	
 	if (!posterPath) return null;
-
+	
 	let timeOutId = null;
 	let timeOutId2 = null;
 	const mouseOverHandler = () => {
@@ -35,37 +35,35 @@ function MovieCard({
 	const mouseLeaveHandler = () => {
 		clearTimeout(timeOutId);
 		clearTimeout(timeOutId2);
-
+		
 		timeOutId2 = setTimeout(() => {
 			// setHoveredId(null);
 		}, 300);
 	};
 
 	const clickHandler = () => {
+		console.log("1");
 		setClickedId(movieId);
+		console.log("2");
+		// dispatch(addClickedEle(classStyle));
+		dispatch(addClickedEle2(classStyle));
 	};
-
-	window.addEventListener("click", (e) => {
-		if (!e.target.closest(".parent-of-card-and-description")) {
-			setClickedId(null);
-		}
-	});
-
+	
 	return (
-		<div className={`parent-of-card-and-description`}>
+		<div className={`parent-of-card-and-description ${style}`}>
 			<div
-				onMouseOver={mouseOverHandler}
-				onMouseLeave={mouseLeaveHandler}
+				// onMouseOver={mouseOverHandler}
+				// onMouseLeave={mouseLeaveHandler}
 				onClick={clickHandler}
 				className="cardParent w-36 md:w-44 shrink-0"
 			>
-				{movieId == hoveredId && clickedId != movieId && (
+				{/* {movieId == hoveredId && clickedId != movieId && (
 					<>
 						<div className="hoverCard absolute left-[40%]">
 							<HoverVideoPlay movieId={movieId} />
 						</div>
 					</>
-				)}
+				)} */}
 
 				<div className="relative hover:cursor-pointer">
 					<img alt="Movie card" src={IMG_CDN_URL + posterPath} />
@@ -74,13 +72,15 @@ function MovieCard({
 					)}
 				</div>
 
-				{/* Description box having triggered on click  */}
-			</div>
-			{clickedId == movieId && (
-				<div className="">
+				{/* Description box having triggered on click */}
+			</div> 
+
+			{clickedId == movieId && clickedEle==classStyle && (
+				<div>
+				{console.log("Child Rendered")}
 					<DescriptionCard
 						movieId={movieId}
-						movieDescription={movieDescription}
+						description={description}
 					/>
 				</div>
 			)}

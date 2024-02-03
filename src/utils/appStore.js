@@ -3,6 +3,8 @@ import userReducer from "./userSlice";
 import moviesReducer from "./moviesSlice";
 import gptReducer from "./gptSlice";
 import configReducer from "./configSlice";
+import clickedEleSlice from "./clickedEleSlice";
+import clickedCardVideoKeySlice from "./clickedCardVideoKeySlice";
 
 const appStore = configureStore({
 	reducer: {
@@ -10,6 +12,8 @@ const appStore = configureStore({
 		movies: moviesReducer,
 		gpt: gptReducer,
 		config: configReducer,
+		clickedEle: clickedEleSlice,
+		clickedCardVideoKey: clickedCardVideoKeySlice,
 	},
 });
 
