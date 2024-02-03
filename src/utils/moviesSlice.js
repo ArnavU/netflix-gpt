@@ -10,6 +10,8 @@ const moviesSlice = createSlice({
         upcomingMovies: null,
         trailerVideo: null,
         cardHoverVideos: {},
+        movieDescription: {},
+        nowClickedCard: {},
     },
     reducers: {
         addNowPlayingMovies: (state, action) =>{
@@ -29,12 +31,29 @@ const moviesSlice = createSlice({
         },
         addCardHoverVideos: (state, action) => {
             const {movieId, trailerKey} = action.payload;
-            console.log("HIIII", movieId, trailerKey);
             state.cardHoverVideos[movieId] = trailerKey;
+        }, 
+        addMovieDescription: (state, action) => {
+    /*  {
+            id: {
+                title: __, 
+                original_language: __,
+                overview: __,
+                release_date: __,
+                vote_average: __,
+            }
+        }
+            */
+           const {id, description} = action.payload;
+           state.movieDescription[id] = description;
+        }, 
+        addNowClickedCard: (state, action) => {
+            const {movieId, movieDescription} = action.payload;
+            state.nowClickedCard = {movieId, movieDescription};
         }
     }
 })
 
-export const {addNowPlayingMovies, addTrailerVideo, addPopularMovies, addTopRatedMovies, addUpcomingMovies, addCardHoverVideos} = moviesSlice.actions;
+export const {addNowPlayingMovies, addTrailerVideo, addPopularMovies, addTopRatedMovies, addUpcomingMovies, addCardHoverVideos, addMovieDescription, addNowClickedCard } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

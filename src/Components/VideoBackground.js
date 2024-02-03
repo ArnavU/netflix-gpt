@@ -5,8 +5,6 @@ const VideoBackground = ({ movieId }) => {
 	useMovieTrailer(movieId);
 	const trailerKey = useSelector((store) => store.movies?.trailerVideo?.key);
 
-	console.log(trailerKey);
-
 	return (
 		<div>
 			<iframe

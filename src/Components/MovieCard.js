@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IMG_CDN_URL } from "../utils/constants";
 import HoverVideoPlay from "./HoverVideoPlay";
+import { useDispatch, useSelector } from "react-redux";
+import { addMovieDescription, addNowClickedCard } from "../utils/moviesSlice";
+import useDispatchDescription from "../hooks/useDispatchDescription";
+import ClickVideoPlay from "./ClickVideoPlay";
+import DescriptionCard from "./DescriptionCard";
 
 function MovieCard({
 	posterPath,
@@ -9,20 +14,31 @@ function MovieCard({
 	hoveredId,
 	setClickedId,
 	clickedId,
+	description,
+	setClickedCardDescription,
 }) {
+	const movieDescription = useDispatchDescription(description, movieId);
+	
+	const dispatch = useDispatch();
+
 	if (!posterPath) return null;
 
 	let timeOutId = null;
+	let timeOutId2 = null;
 	const mouseOverHandler = () => {
+		clearTimeout(timeOutId2);
 		timeOutId = setTimeout(() => {
-			console.log("Timeout started");
-			setHoveredId(movieId);
-		}, 1000);
+			// setHoveredId(movieId);
+		}, 2000);
 	};
 
 	const mouseLeaveHandler = () => {
 		clearTimeout(timeOutId);
-		setHoveredId(null);
+		clearTimeout(timeOutId2);
+
+		timeOutId2 = setTimeout(() => {
+			// setHoveredId(null);
+		}, 300);
 	};
 
 	const clickHandler = () => {
@@ -36,7 +52,7 @@ function MovieCard({
 	});
 
 	return (
-		<div className="parent-of-card-and-description">
+		<div className={`parent-of-card-and-description`}>
 			<div
 				onMouseOver={mouseOverHandler}
 				onMouseLeave={mouseLeaveHandler}
@@ -61,10 +77,11 @@ function MovieCard({
 				{/* Description box having triggered on click  */}
 			</div>
 			{clickedId == movieId && (
-				<div className="my-description">
-					<div className="absolute h-[40vh] w-[30vw] bg-zinc-800 top-[10%] z-[100]">
-						<p>Hi this is Description</p>
-					</div>
+				<div className="">
+					<DescriptionCard
+						movieId={movieId}
+						movieDescription={movieDescription}
+					/>
 				</div>
 			)}
 		</div>

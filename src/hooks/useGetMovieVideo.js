@@ -15,14 +15,12 @@ const useGetMovieVideo = async (movieId) => {
 		);
 		const jsonData = await data.json();
 
-		const filteredTrailer = jsonData.results.filter((video, index) => {
-			return video.type == "Trailer";
-		});
+		// const filteredTrailer = jsonData.results.filter((video, index) => {
+		// 	return video.type == "Trailer";
+		// });
 
 		const trailer = jsonData.length ? jsonData[0] : jsonData.results[0];
 		const trailerKey = trailer?.key;
-
-		console.log("movieId, trailerKey", movieId, trailerKey);
 
 		dispatch(
 			addCardHoverVideos({ movieId: movieId, trailerKey: trailerKey })
