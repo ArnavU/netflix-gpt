@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import MovieList from "./MovieList";
 import { addClickedEle } from "../utils/moviesSlice"; 
 import { addClickedEle2 } from "../utils/clickedEleSlice";
+import { useRef } from "react";
 
 const SecondaryContainer = () => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const SecondaryContainer = () => {
 
   return (
     <div className="bg-black">
-      <div className="md:translate-y-[-150px]">
+      <div className="mt-[-10%] relative z-1">
         <MovieList listTitle={"Now Playing"} movies={movies.nowPlayingMovies}/> 
         <MovieList listTitle={"Top Rated"} movies={movies.topRatedMovies}/>
         <MovieList listTitle={"Popular Movies"} movies={movies.popularMovies}/>

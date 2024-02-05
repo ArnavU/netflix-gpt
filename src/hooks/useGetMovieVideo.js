@@ -16,11 +16,11 @@ const useGetMovieVideo = async (movieId) => {
 		);
 		const jsonData = await data.json();
 
-		// const filteredTrailer = jsonData.results.filter((video, index) => {
-		// 	return video.type == "Trailer";
-		// });
+		const filteredTrailer = jsonData.results.filter((video, index) => {
+			return video.type.toLowerCase().includes("trailer");
+		});
 
-		const trailer = jsonData.length ? jsonData[0] : jsonData.results[0];
+		const trailer = filteredTrailer.length ? filteredTrailer[0] : jsonData.results[0];
 		const trailerKey = trailer?.key;
 
 		dispatch(

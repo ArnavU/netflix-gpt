@@ -65,7 +65,7 @@ const Header = () => {
 
 			{user && (
 				// user image and signout button
-				<div className="flex md:p-2 justify-center items-center">
+				<div className="flex md:p-2 justify-center items-center gap-[1%]">
 					{showGptSearch && (
 						<select
 							className="p-2 bg-gray-900 text-white rounded-lg"
@@ -90,13 +90,13 @@ const Header = () => {
 						{showGptSearch ? "Home Page" : "GPT Search"}
 					</button>
 					<img
-						className="w-12 h-12 hidden sm:block md:block"
+						className="w-12 h-12 hidden sm:block md:block rounded-full overflow-hidden object-cover"
 						alt="usericon"
 						src={user.photoURL}
 					/>
 					<button
 						onClick={handleSignOut}
-						className="font-bold text-white"
+						className="font-bold text-white whitespace-nowrap shrink-0"
 					>
 						Sign Out
 					</button>

@@ -1,25 +1,44 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MovieCard from "./MovieCard";
 import { useSelector } from "react-redux";
+import { IoIosArrowDropleft } from "react-icons/io";
+import { IoIosArrowDropright } from "react-icons/io";
 
 function MovieList({ listTitle, movies }) {
 	const [hoveredId, setHoveredId] = useState(null);
 	const [clickedId, setClickedId] = useState(null);
 
 	// const clickedEle = useSelector(store => store.movies.clickedEle);
-
 	console.log("card clicked");
 
-	useEffect(() => {
-		console.log("uesEffect of MovieList");
-	}, []);
+	const scrollContainerRef = useRef(null);
+
+	const handleScrollRight = () => {
+		const scrollContainer = scrollContainerRef.current;
+		if (scrollContainer) {
+			scrollContainer.style.scrollBehavior = 'smooth'
+			scrollContainer.scrollLeft += 300; // Adjust the scroll distance as needed
+		}
+	};
+	
+	const handleScrollLeft = () => {
+		const scrollContainer = scrollContainerRef.current;
+		if (scrollContainer) {
+			scrollContainer.style.scrollBehavior = 'smooth'
+			scrollContainer.scrollLeft -= 300; // Adjust the scroll distance as needed
+		}
+	};
+	
 
 	return (
-		<div className="p-6 md:pl-[40px] relative">
-			<h1 className="text-lg md:text-3xl font-bold py-4 text-white">
+		<div className="px-6 mt-[10px] xl:mt-4 md:px-[40px] relative">
+			<h1 className="text-lg md:text-3xl font-bold pt-4 pb-2 text-white">
 				{listTitle}
 			</h1>
-			<div className="flex flex-shrink-0 gap-2 overflow-x-auto overflow-y-hidden">
+			<div
+				ref={scrollContainerRef}
+				className="movieList flex flex-shrink-0 gap-2 overflow-x-auto overflow-y-hidden"
+			>
 				{movies?.map((movie) => {
 					const {
 						id,
@@ -50,9 +69,11 @@ function MovieList({ listTitle, movies }) {
 						/>
 					);
 				})}
+				<button onClick={handleScrollLeft} className="text-white scale-[2.5] absolute ml-[-1%]  top-[56%]"><IoIosArrowDropleft /></button>
+				<button onClick={handleScrollRight} className="text-white scale-[2.5] absolute top-[56%] right-[1.4%]"><IoIosArrowDropright /></button>
 			</div>
 		</div>
-	);
+	); 
 }
 
 export default MovieList;
