@@ -12,12 +12,11 @@ const SecondaryContainer = () => {
       if(!e.target.closest(".parent-of-card-and-description")) {
         dispatch(addClickedEle2(null));
       }
-    
     })
     console.log("Secondary Container")
 
   return (
-    <div className="bg-black">
+    <div className="bg-zinc-950">
       <div className="mt-[-10%] relative z-1">
         <MovieList listTitle={"Now Playing"} movies={movies.nowPlayingMovies}/> 
         <MovieList listTitle={"Top Rated"} movies={movies.topRatedMovies}/>

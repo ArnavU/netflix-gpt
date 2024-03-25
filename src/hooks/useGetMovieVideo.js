@@ -11,7 +11,7 @@ const useGetMovieVideo = async (movieId) => {
 
 	const getMoviesData = async () => {
 		const data = await fetch(
-			`https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`,
+			`${process.env.REACT_APP_TMDB_PROXY_URL}/3/movie/${movieId}/videos?language=en-US`,
 			API_OPTIONS
 		);
 		const jsonData = await data.json();
@@ -30,7 +30,8 @@ const useGetMovieVideo = async (movieId) => {
 	};
 
     useEffect(()=>{
-        !ids[movieId] && getMoviesData();
+		if(movieId)
+        	!ids[movieId] && getMoviesData();
     }, []);
 };
 

@@ -5,15 +5,15 @@ import openai from "../utils/openAi";
 import { API_OPTIONS } from "../utils/constants";
 import { addGptMovieResult } from "../utils/gptSlice";
 
-const GptSearchBar = () => {
+const GptSearchBar = ({setIsLoading}) => {
 	const langKey = useSelector((store) => store.config.lang);
 	const searchText = useRef(null);
 	const dispatch = useDispatch();
 
 	const searchMovieTMDB = async (movie) => {
 		const data = await fetch(
-			`https://api.themoviedb.org/3/search/movie?query=${movie}&include_adult=false&language=en-US&page=1`,
-			API_OPTIONS
+			`${process.env.REACT_APP_TMDB_PROXY_URL}/3/search/movie?query=${movie}&include_adult=false&language=en-US&page=1`,
+			API_OPTIONS 
 		);
 
 		const jsonData = await data.json();
@@ -21,6 +21,7 @@ const GptSearchBar = () => {
 	};
 
 	const handleGptSearchClick = async () => {
+		setIsLoading(true);
 		console.log(searchText.current.value);
 		// Make an API call to GPT API and get Movie Results
 
@@ -58,6 +59,8 @@ const GptSearchBar = () => {
 		console.log(tmdbResults);
 
 		dispatch(addGptMovieResult({movieNames: gptMovies,movieResults: tmdbResults}));
+
+		setIsLoading(false); 
 	};
 
 	return (

@@ -11,7 +11,7 @@ const useMovieTrailer = (movieId) => {
 	const getMovieVideo = async () => {
 
 		const data = await fetch(
-			`https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`,
+			`${process.env.REACT_APP_TMDB_PROXY_URL}/3/movie/${movieId}/videos?language=en-US`,
 			API_OPTIONS
 		);
 		const jsonData = await data.json();
@@ -28,8 +28,9 @@ const useMovieTrailer = (movieId) => {
 	};
 
 	useEffect(() => {
-		!movieTrailer && getMovieVideo();
-	}, []);
+		if(movieId) 
+			!movieTrailer && getMovieVideo();
+	}, [movieId]);
 };
 
 export default useMovieTrailer;

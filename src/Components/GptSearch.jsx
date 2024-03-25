@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import GptSearchBar from "./GptSearchBar";
 import GptMovieSuggestions from "./GptMovieSuggestions";
 import { BG_URL } from "../utils/constants";
 
 const GptSearch = () => {
+	const [isLoading, setIsLoading] = useState(false);
 
 	return (
 		<>
@@ -12,9 +13,10 @@ const GptSearch = () => {
 		</div>
 			<div className="min-h-screen">
 				<div className="md:pt-[0] pt-[25%]">
-					<GptSearchBar />
+					<GptSearchBar setIsLoading={setIsLoading} />
 				</div>
-				<GptMovieSuggestions />
+				{/* {isLoading && <GptShimmer />} */}
+				<GptMovieSuggestions isLoading={isLoading}/>
 			</div>
 		</>
 	);
