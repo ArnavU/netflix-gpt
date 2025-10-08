@@ -4,7 +4,7 @@ import { create } from "lodash";
 const moviesSlice = createSlice({
     name: "movies", 
     initialState: {
-        nowPlayingMovies: null,
+        nowPlayingMovies: [],
         popularMovies: null,
         topRatedMovies: null,
         upcomingMovies: null,

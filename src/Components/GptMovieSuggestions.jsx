@@ -19,7 +19,7 @@ const GptMovieSuggestions = ({ isLoading }) => {
 				</div>)
 			}
 			{movieNames && (
-				<div className="md:p-4 m-4 bg-black/80 text-white">
+				<div className="md:p-4 m-4 pb-[25px] rounded-xl bg-black/80 text-white">
 					{movieNames.map((movieName, index) => (
 						<MovieList
 							listTitle={movieName}

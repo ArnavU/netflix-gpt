@@ -24,7 +24,7 @@ const MainContainer = () => {
 	// const {title, original_language, release_date, vote_average} = mainMovie || {};
 
 	return (
-		<div className="pt-[32%] sm:pt-[20%] md:pt-0 bg-black min-h-[120vh]">
+		<div className="relative pt-[32%] sm:pt-[20%] md:pt-0 bg-black xl:min-h-[120vh]">
 			{/* {!trailerKey && <VideoBgShimmer />} */}
 			<VideoBackground movieId={id}/>                     
 			<VideoTitle title={original_title} overview={overview} movieId={id} description={[id, title, original_language, overview, release_date, vote_average]}/>

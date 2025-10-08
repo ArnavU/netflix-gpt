@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LANG from "../utils/languageConstants";
 import { useRef } from "react";
 import openai from "../utils/openAi";
+import { geminiAi } from "../utils/gemini";
 import { API_OPTIONS } from "../utils/constants";
 import { addGptMovieResult } from "../utils/gptSlice";
 
@@ -22,34 +23,19 @@ const GptSearchBar = ({setIsLoading}) => {
 
 	const handleGptSearchClick = async () => {
 		setIsLoading(true);
-		console.log(searchText.current.value);
-		// Make an API call to GPT API and get Movie Results
+		
+		const gptInstructions = `Act as a Movie Recommendation System and sugest some movies for the query. Only give me names of 5 movies, comma seperated like the example result give ahead. Example Result: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya`;
 
-		const gptQuery = `Act as a Movie Recommendation System and sugest some movies for the query: ${searchText.current.value}. Only give me names of 5 movies, comma seperated like the example result give ahead. Example Result: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya`;
-
-		const gptResults = await openai.chat.completions.create({
-			messages: [{ role: "user", content: gptQuery }],
-			model: "gpt-3.5-turbo",
+		const response = await geminiAi.models.generateContent({
+			model: "gemini-2.5-flash",
+			contents: searchText.current.value,
+			config: {
+			  	systemInstruction: gptInstructions,
+			},
 		});
-
-		// const gptResults = {
-		// 	choices: [
-		// 		{
-		// 			message: {
-		// 				content:
-		// 					"Andaz Apna Apna, Chupke Chupke, Jaane Bhi Do Yaaro, Amar Akbar Anthony, Hera Pheri",
-		// 			},
-		// 		},
-		// 	],
-		// };
-
-		if (!gptResults.choices) {
-			// TODO: Write Error handling
-		}
-
-		// '[Mad Max: Fury Road', 'The Dark Knight',' John Wick', 'Die Hard', 'Mission: Impossible - Fallout']
-		console.log(gptResults.choices?.[0]?.message.content);
-		const gptMovies = gptResults.choices?.[0]?.message.content.split(", ");
+		
+		const gptMovies = response.text.split(", ");
+		console.log("GPT MOVIES GEMINI: ", gptMovies);
 
 		// for each movie i will search TMDB API
 		const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
